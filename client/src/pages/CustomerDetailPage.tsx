@@ -1,6 +1,6 @@
 /**
  * CustomerDetailPage - 墨と金箔テーマ
- * 顧客カルテ詳細：情報閲覧・メモ編集
+ * 顧客カルテ詳細：情報閲覧・メモ編集・送信済みボタン
  */
 import { useState, useMemo } from 'react';
 import { useData } from '@/contexts/DataContext';
@@ -9,7 +9,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { Badge } from '@/components/ui/badge';
-import { ArrowLeft, Star, MapPin, Briefcase, Calendar, Heart, Wine, Clock, Edit3, Save, X } from 'lucide-react';
+import { ArrowLeft, Star, MapPin, Briefcase, Calendar, Heart, Wine, Clock, Edit3, Save, X, Send, Check } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { toast } from 'sonner';
 import { motion } from 'framer-motion';
@@ -17,9 +17,10 @@ import { motion } from 'framer-motion';
 export default function CustomerDetailPage() {
   const [, params] = useRoute('/customers/:id');
   const [, navigate] = useLocation();
-  const { customers, updateCustomer, sales } = useData();
+  const { customers, updateCustomer, sales, addSendHistory, updateSendCount } = useData();
   const [editingMemo, setEditingMemo] = useState(false);
   const [memo, setMemo] = useState('');
+  const [justMarkedSent, setJustMarkedSent] = useState(false);
 
   const customer = useMemo(() => {
     return customers.find(c => c.id === params?.id);
@@ -57,6 +58,23 @@ export default function CustomerDetailPage() {
     toast.success('メモを保存しました');
   };
 
+  const markAsSent = () => {
+    const now = new Date();
+    const dateStr = now.toISOString().split('T')[0].replace(/-/g, '/');
+    
+    addSendHistory({
+      customerName: customer.nickname || customer.name,
+      message: `（${dateStr}に送信済みとしてマーク）`,
+      sentAt: now.toISOString(),
+    });
+    updateSendCount(customer.name);
+    
+    setJustMarkedSent(true);
+    toast.success(`${customer.nickname || customer.name}への送信を記録しました（${dateStr}）`);
+    
+    setTimeout(() => setJustMarkedSent(false), 3000);
+  };
+
   const infoItems = [
     { icon: Briefcase, label: '職業', value: customer.occupation },
     { icon: MapPin, label: '居住地', value: customer.location },
@@ -64,7 +82,11 @@ export default function CustomerDetailPage() {
     { icon: Heart, label: '家族', value: customer.family },
     { icon: Wine, label: 'お酒', value: customer.drinks },
     { icon: Clock, label: '来店頻度', value: customer.visitFrequency },
-  ].filter(item => item.value);
+  ].filter(item => item.value && item.value !== '(不明)');
+
+  const days = parseInt(customer.daysSinceLastSend);
+  const isLongUnsent = !isNaN(days) && days >= 14;
+  const isUnsent = customer.lastSendDate === '未送信' || customer.sendCount === 0;
 
   return (
     <div className="px-4 pt-6 pb-4 space-y-4">
@@ -123,12 +145,40 @@ export default function CustomerDetailPage() {
               </div>
               <div>
                 <p className="text-xs text-muted-foreground">最終送信</p>
-                <p className="font-mono text-sm font-medium">{customer.lastSendDate}</p>
+                <p className={cn(
+                  "font-mono text-sm font-medium",
+                  isLongUnsent && "text-amber-400",
+                  isUnsent && "text-destructive/70"
+                )}>
+                  {customer.lastSendDate}
+                  {isLongUnsent && !isUnsent && ` (${days}日前)`}
+                </p>
               </div>
               <div>
                 <p className="text-xs text-muted-foreground">最終来店</p>
                 <p className="font-mono text-sm font-medium">{customer.lastVisit || '—'}</p>
               </div>
+            </div>
+
+            {/* Send button */}
+            <div className="mt-3 pt-3 border-t border-border/30">
+              <Button
+                onClick={markAsSent}
+                disabled={justMarkedSent}
+                size="sm"
+                className={cn(
+                  "w-full h-9 text-xs font-medium transition-all",
+                  justMarkedSent
+                    ? "bg-green-500/15 text-green-400 border border-green-500/30"
+                    : "bg-gold hover:bg-gold-bright text-background"
+                )}
+              >
+                {justMarkedSent ? (
+                  <><Check className="h-3.5 w-3.5 mr-1" /> 送信済みを記録しました</>
+                ) : (
+                  <><Send className="h-3.5 w-3.5 mr-1" /> 今日の送信済みを記録</>
+                )}
+              </Button>
             </div>
           </CardContent>
         </Card>

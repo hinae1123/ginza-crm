@@ -4,20 +4,20 @@
  * - 顧客選択 → AI生成 → コピー → 送信記録
  * - 一括生成対応
  * - 未送信・長期間未送信の優先表示
+ * - 送信履歴CSVエクスポート
  */
 import { useState, useMemo, useCallback } from 'react';
 import { useData, type Customer } from '@/contexts/DataContext';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Textarea } from '@/components/ui/textarea';
 import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Checkbox } from '@/components/ui/checkbox';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import {
   Search, MessageSquare, Copy, Check, Send, Star, Clock,
-  AlertCircle, Sparkles, Users, History, Loader2, RefreshCw
+  AlertCircle, Sparkles, Users, History, Loader2, Download
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { toast } from 'sonner';
@@ -145,6 +145,34 @@ export default function MessagesPage() {
     );
     toast.success(`${msg.nickname}への送信を記録しました`);
   };
+
+  const exportSendHistoryCSV = useCallback(() => {
+    if (sendHistory.length === 0) {
+      toast.error('送信履歴がありません');
+      return;
+    }
+
+    const headers = ['顧客名', 'メッセージ', '送信日時'];
+    const rows = sendHistory.map(r => [
+      r.customerName,
+      r.message.replace(/\n/g, ' '),
+      new Date(r.sentAt).toLocaleString('ja-JP'),
+    ]);
+
+    const csvContent = [headers, ...rows]
+      .map(row => row.map(cell => `"${cell.replace(/"/g, '""')}"`).join(','))
+      .join('\n');
+
+    const bom = '\uFEFF';
+    const blob = new Blob([bom + csvContent], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = `ginza_send_history_${new Date().toISOString().split('T')[0]}.csv`;
+    link.click();
+    URL.revokeObjectURL(url);
+    toast.success('送信履歴CSVをダウンロードしました');
+  }, [sendHistory]);
 
   return (
     <div className="px-4 pt-6 pb-4 space-y-4">
@@ -333,13 +361,26 @@ export default function MessagesPage() {
 
         {/* History Tab */}
         <TabsContent value="history" className="space-y-3 mt-3">
+          <div className="flex items-center justify-between">
+            <span className="text-xs text-muted-foreground">{sendHistory.length}件の送信履歴</span>
+            {sendHistory.length > 0 && (
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={exportSendHistoryCSV}
+                className="h-7 text-xs text-gold hover:text-gold-bright"
+              >
+                <Download className="h-3 w-3 mr-1" /> CSV出力
+              </Button>
+            )}
+          </div>
           {sendHistory.length === 0 ? (
             <div className="text-center py-12">
               <History className="h-8 w-8 text-muted-foreground mx-auto mb-3" />
               <p className="text-sm text-muted-foreground">送信履歴はまだありません</p>
             </div>
           ) : (
-            <ScrollArea className="h-[calc(100vh-260px)]">
+            <ScrollArea className="h-[calc(100vh-300px)]">
               <div className="space-y-2">
                 {sendHistory.map((record, i) => (
                   <Card key={i} className="bg-card border-border/20">

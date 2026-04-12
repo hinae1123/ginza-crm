@@ -1,11 +1,10 @@
 import { Toaster } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
-import { Route, Switch } from "wouter";
+import { Route, Switch, Router } from "wouter";
+import { useHashLocation } from "wouter/use-hash-location";
 import ErrorBoundary from "./components/ErrorBoundary";
 import { ThemeProvider } from "./contexts/ThemeContext";
-import { AuthProvider, useAuth } from "./contexts/AuthContext";
 import { DataProvider } from "./contexts/DataContext";
-import LoginPage from "./pages/LoginPage";
 import Dashboard from "./pages/Dashboard";
 import CustomersPage from "./pages/CustomersPage";
 import CustomerDetailPage from "./pages/CustomerDetailPage";
@@ -14,35 +13,6 @@ import SalesPage from "./pages/SalesPage";
 import SettingsPage from "./pages/SettingsPage";
 import BottomNav from "./components/BottomNav";
 import NotFound from "./pages/NotFound";
-
-function AuthenticatedApp() {
-  return (
-    <DataProvider>
-      <div className="min-h-screen flex flex-col pb-20">
-        <Switch>
-          <Route path="/" component={Dashboard} />
-          <Route path="/customers" component={CustomersPage} />
-          <Route path="/customers/:id" component={CustomerDetailPage} />
-          <Route path="/messages" component={MessagesPage} />
-          <Route path="/sales" component={SalesPage} />
-          <Route path="/settings" component={SettingsPage} />
-          <Route component={NotFound} />
-        </Switch>
-        <BottomNav />
-      </div>
-    </DataProvider>
-  );
-}
-
-function AppContent() {
-  const { isAuthenticated } = useAuth();
-
-  if (!isAuthenticated) {
-    return <LoginPage />;
-  }
-
-  return <AuthenticatedApp />;
-}
 
 function App() {
   return (
@@ -59,9 +29,22 @@ function App() {
               },
             }}
           />
-          <AuthProvider>
-            <AppContent />
-          </AuthProvider>
+          <DataProvider>
+            <Router hook={useHashLocation}>
+              <div className="min-h-screen flex flex-col pb-20">
+                <Switch>
+                  <Route path="/" component={Dashboard} />
+                  <Route path="/customers" component={CustomersPage} />
+                  <Route path="/customers/:id" component={CustomerDetailPage} />
+                  <Route path="/messages" component={MessagesPage} />
+                  <Route path="/sales" component={SalesPage} />
+                  <Route path="/settings" component={SettingsPage} />
+                  <Route component={NotFound} />
+                </Switch>
+                <BottomNav />
+              </div>
+            </Router>
+          </DataProvider>
         </TooltipProvider>
       </ThemeProvider>
     </ErrorBoundary>

@@ -4,6 +4,14 @@ import initialSales from '../data/sales.json';
 import initialExcluded from '../data/excluded.json';
 import promptData from '../data/prompt.json';
 
+// ============================================================
+// Data Version Management
+// When data is updated, increment this version string.
+// If the stored version doesn't match, localStorage is auto-reset.
+// ============================================================
+const DATA_VERSION = '2026-04-13-v2';
+const VERSION_KEY = 'ginza_data_version';
+
 export interface Customer {
   id: string;
   name: string;
@@ -71,9 +79,40 @@ interface DataContextType {
   getCustomerByName: (name: string) => Customer | undefined;
   isExcluded: (name: string) => boolean;
   monthlyGoal: number;
+  dataVersion: string;
 }
 
 const DataContext = createContext<DataContextType | null>(null);
+
+/**
+ * Check if stored data version matches current version.
+ * If not, clear all ginza_ prefixed localStorage keys and update version.
+ * This ensures that when data files are updated in a new deploy,
+ * users automatically get fresh data without manual reset.
+ */
+function checkAndMigrateVersion(): boolean {
+  try {
+    const storedVersion = localStorage.getItem(VERSION_KEY);
+    if (storedVersion !== DATA_VERSION) {
+      // Version mismatch - clear all CRM data from localStorage
+      const keysToRemove: string[] = [];
+      for (let i = 0; i < localStorage.length; i++) {
+        const key = localStorage.key(i);
+        if (key && key.startsWith('ginza_')) {
+          keysToRemove.push(key);
+        }
+      }
+      keysToRemove.forEach(key => localStorage.removeItem(key));
+      // Set new version
+      localStorage.setItem(VERSION_KEY, DATA_VERSION);
+      console.log(`[CRM] Data version updated: ${storedVersion || 'none'} → ${DATA_VERSION}. Cache cleared.`);
+      return true; // was reset
+    }
+    return false; // no reset needed
+  } catch {
+    return false;
+  }
+}
 
 function loadFromStorage<T>(key: string, fallback: T): T {
   try {
@@ -88,6 +127,9 @@ function saveToStorage(key: string, data: unknown) {
     localStorage.setItem(key, JSON.stringify(data));
   } catch {}
 }
+
+// Run version check before any data loading
+checkAndMigrateVersion();
 
 export function DataProvider({ children }: { children: ReactNode }) {
   const [customers, setCustomers] = useState<Customer[]>(() =>
@@ -180,6 +222,7 @@ export function DataProvider({ children }: { children: ReactNode }) {
       getCustomerByName,
       isExcluded,
       monthlyGoal,
+      dataVersion: DATA_VERSION,
     }}>
       {children}
     </DataContext.Provider>

@@ -1,23 +1,27 @@
 /**
  * CustomersPage - 墨と金箔テーマ
- * 顧客一覧：検索・フィルター・⭐️表示
+ * 顧客一覧：検索・フィルター・⭐️表示・送信履歴表示・CSVエクスポート
  */
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useCallback } from 'react';
 import { useData, type Customer } from '@/contexts/DataContext';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
 import { Link } from 'wouter';
-import { Search, Star, Filter, ChevronRight } from 'lucide-react';
+import { Search, Star, Filter, ChevronRight, Download, Clock, AlertCircle } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { motion } from 'framer-motion';
+import { toast } from 'sonner';
 
-type FilterType = 'all' | 'star' | 'karte' | 'unsent';
+type FilterType = 'all' | 'star' | 'karte' | 'unsent' | 'longUnsent';
+type SortType = 'default' | 'star' | 'lastSend' | 'sendCount';
 
 export default function CustomersPage() {
   const { customers, isExcluded } = useData();
   const [search, setSearch] = useState('');
   const [filter, setFilter] = useState<FilterType>('all');
+  const [sortBy, setSortBy] = useState<SortType>('default');
 
   const filtered = useMemo(() => {
     let list = [...customers];
@@ -33,6 +37,13 @@ export default function CustomersPage() {
       case 'unsent':
         list = list.filter(c => c.lastSendDate === '未送信' || c.sendCount === 0);
         break;
+      case 'longUnsent':
+        list = list.filter(c => {
+          if (c.daysSinceLastSend === '未送信') return false;
+          const days = parseInt(c.daysSinceLastSend);
+          return !isNaN(days) && days >= 14;
+        });
+        break;
     }
 
     // Apply search
@@ -46,24 +57,97 @@ export default function CustomersPage() {
       );
     }
 
-    // Sort: stars first, then by rank (S > A > B), then by name
+    // Sort
     const rankOrder: Record<string, number> = { 'S': 0, 'A': 1, 'B': 2, '-': 3 };
-    list.sort((a, b) => {
-      if (a.star !== b.star) return a.star ? -1 : 1;
-      const ra = rankOrder[a.rank] ?? 3;
-      const rb = rankOrder[b.rank] ?? 3;
-      if (ra !== rb) return ra - rb;
-      return a.name.localeCompare(b.name, 'ja');
-    });
+    
+    switch (sortBy) {
+      case 'star':
+        list.sort((a, b) => {
+          if (a.star !== b.star) return a.star ? -1 : 1;
+          const ra = rankOrder[a.rank] ?? 3;
+          const rb = rankOrder[b.rank] ?? 3;
+          if (ra !== rb) return ra - rb;
+          return a.name.localeCompare(b.name, 'ja');
+        });
+        break;
+      case 'lastSend':
+        list.sort((a, b) => {
+          // 未送信 to the end
+          if (a.lastSendDate === '未送信' && b.lastSendDate !== '未送信') return 1;
+          if (b.lastSendDate === '未送信' && a.lastSendDate !== '未送信') return -1;
+          if (a.lastSendDate === '未送信' && b.lastSendDate === '未送信') return 0;
+          // Sort by date descending (most recent first)
+          return b.lastSendDate.localeCompare(a.lastSendDate);
+        });
+        break;
+      case 'sendCount':
+        list.sort((a, b) => b.sendCount - a.sendCount);
+        break;
+      default:
+        // Default: stars first, then by rank, then by name
+        list.sort((a, b) => {
+          if (a.star !== b.star) return a.star ? -1 : 1;
+          const ra = rankOrder[a.rank] ?? 3;
+          const rb = rankOrder[b.rank] ?? 3;
+          if (ra !== rb) return ra - rb;
+          return a.name.localeCompare(b.name, 'ja');
+        });
+        break;
+    }
 
     return list;
-  }, [customers, search, filter]);
+  }, [customers, search, filter, sortBy]);
 
-  const filters: { key: FilterType; label: string; count: number }[] = [
+  const longUnsentCount = useMemo(() => {
+    return customers.filter(c => {
+      if (c.daysSinceLastSend === '未送信') return false;
+      const days = parseInt(c.daysSinceLastSend);
+      return !isNaN(days) && days >= 14;
+    }).length;
+  }, [customers]);
+
+  const exportCSV = useCallback(() => {
+    const headers = ['名前', '呼び名', '⭐️', 'ランク', '送信回数', '最終送信日', '経過日数', '最終来店', '職業'];
+    const rows = filtered.map(c => [
+      c.name,
+      c.nickname,
+      c.star ? '⭐️' : '',
+      c.rank || '',
+      c.sendCount.toString(),
+      c.lastSendDate,
+      c.daysSinceLastSend,
+      c.lastVisit || '',
+      c.occupation || '',
+    ]);
+
+    const csvContent = [headers, ...rows]
+      .map(row => row.map(cell => `"${cell.replace(/"/g, '""')}"`).join(','))
+      .join('\n');
+
+    const bom = '\uFEFF';
+    const blob = new Blob([bom + csvContent], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = `ginza_crm_customers_${new Date().toISOString().split('T')[0]}.csv`;
+    link.click();
+    URL.revokeObjectURL(url);
+    toast.success('CSVをダウンロードしました');
+  }, [filtered]);
+
+  const filters: { key: FilterType; label: string; count: number; icon?: React.ReactNode }[] = [
     { key: 'all', label: 'すべて', count: customers.length },
-    { key: 'star', label: '⭐️', count: customers.filter(c => c.star).length },
+    { key: 'star', label: '⭐️', count: customers.filter(c => c.star).length, icon: <Star className="h-3 w-3" /> },
     { key: 'karte', label: 'カルテ有', count: customers.filter(c => c.hasKarte && c.rawContent).length },
-    { key: 'unsent', label: '未送信', count: customers.filter(c => c.lastSendDate === '未送信' || c.sendCount === 0).length },
+    { key: 'unsent', label: '未送信', count: customers.filter(c => c.lastSendDate === '未送信' || c.sendCount === 0).length, icon: <Filter className="h-3 w-3" /> },
+    { key: 'longUnsent', label: '14日以上', count: longUnsentCount, icon: <AlertCircle className="h-3 w-3" /> },
+  ];
+
+  const sorts: { key: SortType; label: string }[] = [
+    { key: 'default', label: '標準' },
+    { key: 'star', label: '⭐️優先' },
+    { key: 'lastSend', label: '送信日順' },
+    { key: 'sendCount', label: '送信回数順' },
   ];
 
   return (
@@ -71,7 +155,17 @@ export default function CustomersPage() {
       {/* Header */}
       <div className="flex items-baseline justify-between">
         <h1 className="font-serif text-xl font-semibold text-foreground">顧客一覧</h1>
-        <span className="text-xs text-muted-foreground">{filtered.length}名</span>
+        <div className="flex items-center gap-2">
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={exportCSV}
+            className="h-7 text-xs text-gold hover:text-gold-bright"
+          >
+            <Download className="h-3 w-3 mr-1" /> CSV
+          </Button>
+          <span className="text-xs text-muted-foreground">{filtered.length}名</span>
+        </div>
       </div>
 
       {/* Search */}
@@ -95,13 +189,32 @@ export default function CustomersPage() {
               "flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium whitespace-nowrap transition-all",
               filter === f.key
                 ? "bg-gold/20 text-gold border border-gold/30"
-                : "bg-secondary/50 text-muted-foreground border border-transparent hover:text-foreground"
+                : "bg-secondary/50 text-muted-foreground border border-transparent hover:text-foreground",
+              f.key === 'longUnsent' && f.count > 0 && filter !== f.key && "text-amber-400"
             )}
           >
-            {f.key === 'star' && <Star className="h-3 w-3" />}
-            {f.key === 'unsent' && <Filter className="h-3 w-3" />}
+            {f.icon}
             {f.label}
             <span className="opacity-60">{f.count}</span>
+          </button>
+        ))}
+      </div>
+
+      {/* Sort options */}
+      <div className="flex gap-1.5 overflow-x-auto pb-1 scrollbar-hide">
+        <span className="text-xs text-muted-foreground py-1 mr-1">並替:</span>
+        {sorts.map(s => (
+          <button
+            key={s.key}
+            onClick={() => setSortBy(s.key)}
+            className={cn(
+              "px-2.5 py-1 rounded text-[11px] font-medium whitespace-nowrap transition-all",
+              sortBy === s.key
+                ? "bg-gold/15 text-gold"
+                : "text-muted-foreground hover:text-foreground"
+            )}
+          >
+            {s.label}
           </button>
         ))}
       </div>
@@ -122,6 +235,10 @@ export default function CustomersPage() {
 }
 
 function CustomerCard({ customer, index, isExcluded: excluded }: { customer: Customer; index: number; isExcluded: boolean }) {
+  const days = parseInt(customer.daysSinceLastSend);
+  const isLongUnsent = !isNaN(days) && days >= 14;
+  const isUnsent = customer.lastSendDate === '未送信' || customer.sendCount === 0;
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 8 }}
@@ -170,14 +287,22 @@ function CustomerCard({ customer, index, isExcluded: excluded }: { customer: Cus
                     除外
                   </Badge>
                 )}
+                {isLongUnsent && !isUnsent && (
+                  <Badge variant="outline" className="text-[9px] px-1 py-0 h-3.5 text-amber-400 border-amber-400/30">
+                    {days}日
+                  </Badge>
+                )}
               </div>
               <div className="flex items-center gap-2 mt-0.5">
-                {customer.occupation && (
-                  <span className="text-xs text-muted-foreground truncate">{customer.occupation}</span>
-                )}
-                {customer.sendCount > 0 && (
-                  <span className="text-xs text-muted-foreground">
-                    送信{customer.sendCount}回
+                {customer.sendCount > 0 ? (
+                  <span className="text-xs text-muted-foreground flex items-center gap-1">
+                    <Clock className="h-3 w-3" />
+                    送信{customer.sendCount}回 / {customer.lastSendDate}
+                  </span>
+                ) : (
+                  <span className="text-xs text-destructive/70 flex items-center gap-1">
+                    <AlertCircle className="h-3 w-3" />
+                    未送信
                   </span>
                 )}
               </div>

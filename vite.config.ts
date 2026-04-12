@@ -150,9 +150,13 @@ function vitePluginManusDebugCollector(): Plugin {
   };
 }
 
-const plugins = [react(), tailwindcss(), jsxLocPlugin(), vitePluginManusRuntime(), vitePluginManusDebugCollector()];
+const isGHPages = process.env.GH_PAGES === 'true';
+const plugins = isGHPages
+  ? [react(), tailwindcss()]
+  : [react(), tailwindcss(), jsxLocPlugin(), vitePluginManusRuntime(), vitePluginManusDebugCollector()];
 
 export default defineConfig({
+  base: isGHPages ? '/ginza-crm/' : '/',
   plugins,
   resolve: {
     alias: {
