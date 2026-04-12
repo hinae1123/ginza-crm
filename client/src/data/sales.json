@@ -1,402 +1,443 @@
 [
   {
     "date": "2026/1/6",
-    "month": 1,
     "time": "20:25〜00:05",
     "customerName": "望月正和様",
     "partySize": 1,
     "subtotal": 13000,
     "total": 43120,
-    "drinks": ""
+    "drinks": "—",
+    "month": 1
   },
   {
     "date": "2026/1/8",
-    "month": 1,
     "time": "20:25〜23:30",
     "customerName": "中井様",
     "partySize": 1,
     "subtotal": 69500,
     "total": 158730,
-    "drinks": "ソーダ×5(¥10,000)、ソフトドリンク×1(¥1,500)、グラス赤ワイン×5(¥15,000)、佐藤・麦×1(¥30,000)"
+    "drinks": "ソーダ×5、ソフトドリンク×1、グラス赤ワイン×5、佐藤・麦×1",
+    "month": 1
   },
   {
     "date": "2026/1/9",
-    "month": 1,
     "time": "21:25〜23:55",
     "customerName": "深山様",
     "partySize": 1,
     "subtotal": 52000,
     "total": 111650,
-    "drinks": "ソーダ×3(¥6,000)、ジャックダニエル(銘柄詳細判読不明)×1(¥30,000)"
+    "drinks": "ソーダ×3、ジャックダニエル×1",
+    "month": 1
   },
   {
     "date": "2026/1/9",
-    "month": 1,
     "time": "22:25〜23:25",
     "customerName": "清沢様",
     "partySize": 1,
     "subtotal": 53000,
     "total": 106920,
-    "drinks": "ソーダ×6(¥12,000)、グラス白ワイン×1(¥3,000)、吉四六×1(¥25,000)"
+    "drinks": "ソーダ×6、グラス白ワイン×1、吉四六×1",
+    "month": 1
   },
   {
     "date": "2026/1/14",
-    "month": 1,
     "time": "20:15〜21:55",
     "customerName": "横山様",
     "partySize": 1,
     "subtotal": 22000,
     "total": 57420,
-    "drinks": "ソーダ×3(¥6,000)"
+    "drinks": "ソーダ×3",
+    "month": 1
   },
   {
     "date": "2026/1/14",
-    "month": 1,
     "time": "20:25〜23:45",
     "customerName": "中井様",
     "partySize": 1,
     "subtotal": 24000,
     "total": 86130,
-    "drinks": "ソーダ×4(¥8,000)"
+    "drinks": "ソーダ×4",
+    "month": 1
   },
   {
     "date": "2026/1/14",
-    "month": 1,
     "time": "21:25〜01:10",
     "customerName": "饗場様",
     "partySize": 1,
     "subtotal": 301500,
     "total": 528770,
-    "drinks": "ソーダ×2(¥4,000)、丸氷×1(¥1,500)、サン・トーバン 1er 2020×1(¥80,000)、Kグランドキュヴェ×1(¥120,000)、ジュヴレ・シャンベルタン ジャル(シャルルロバン)×1(¥80,000)"
+    "drinks": "ソーダ×2、丸氷×1、サン・トーバン 1er 2020×1、Kグランドキュヴェ×1、ジュヴレ・シャンベルタン×1",
+    "month": 1
   },
   {
     "date": "2026/1/15",
-    "month": 1,
     "time": "22:45〜00:55",
     "customerName": "小櫻・浅野栄二様",
     "partySize": 2,
     "subtotal": 134000,
     "total": 271150,
-    "drinks": "ソーダ×2(¥4,000)、グラス赤ワイン×1(¥3,000)、グラス白ワイン×1(¥3,000)、知多×1(¥40,000)、LP・ウルトラブリュット×1(¥60,000)"
+    "drinks": "ソーダ×2、グラス赤ワイン×1、グラス白ワイン×1、知多×1、LP・ウルトラブリュット×1",
+    "month": 1
   },
   {
     "date": "2026/1/16",
-    "month": 1,
     "time": "20:30〜22:45",
     "customerName": "津田様",
     "partySize": 1,
     "subtotal": 124000,
     "total": 232870,
-    "drinks": "ソーダ×4(¥8,000)、PJベルエポック×1(¥100,000)"
+    "drinks": "ソーダ×4、PJベルエポック×1",
+    "month": 1
   },
   {
     "date": "2026/1/21",
-    "month": 1,
     "time": "20:25〜22:20",
     "customerName": "力也様",
     "partySize": 2,
     "subtotal": 92000,
     "total": 191400,
-    "drinks": "ソーダ×6(¥12,000)、グラスシャンパン×2(¥6,000)、山崎NV×1(¥50,000)"
+    "drinks": "ソーダ×6、グラスシャンパン×2、山崎NV×1",
+    "month": 1
   },
   {
     "date": "2026/1/21",
-    "month": 1,
     "time": "20:30〜00:15",
     "customerName": "中井様",
     "partySize": 1,
     "subtotal": 51000,
     "total": 129250,
-    "drinks": "ソーダ×4(¥8,000)、佐藤・麦×1(¥30,000)"
+    "drinks": "ソーダ×4、佐藤・麦×1",
+    "month": 1
   },
   {
     "date": "2026/1/21",
-    "month": 1,
     "time": "22:20〜23:55",
     "customerName": "石黒様",
     "partySize": 1,
     "subtotal": 74500,
     "total": 141240,
-    "drinks": "丸氷×1(¥1,500)、バランタイン17年×1(¥60,000)"
+    "drinks": "丸氷×1、バランタイン17年×1",
+    "month": 1
   },
   {
     "date": "2026/1/21",
-    "month": 1,
     "time": "22:40〜23:55",
     "customerName": "くぼ様",
     "partySize": 1,
     "subtotal": 36000,
     "total": 79750,
-    "drinks": "ソーダ×4(¥8,000)、テキーラショット×3(¥15,000)"
+    "drinks": "ソーダ×4、テキーラショット×3",
+    "month": 1
   },
   {
     "date": "2026/1/27",
-    "month": 1,
     "time": "20:30〜23:30",
     "customerName": "中井様",
     "partySize": 1,
     "subtotal": 21000,
     "total": 75020,
-    "drinks": "ソーダ×3(¥6,000)、生ビール×1(¥2,000)"
+    "drinks": "ソーダ×3、生ビール×1",
+    "month": 1
   },
   {
     "date": "2026/1/29",
-    "month": 1,
     "time": "22:55〜00:15",
     "customerName": "小島様",
     "partySize": 1,
     "subtotal": 73000,
     "total": 138820,
-    "drinks": "LP・ウルトラブリュット×1(¥60,000)"
+    "drinks": "LP・ウルトラブリュット×1",
+    "month": 1
   },
   {
     "date": "2026/2/10",
-    "month": 2,
     "time": "20:30〜22:50",
     "customerName": "津田 信次様",
     "partySize": 1,
     "subtotal": 97000,
     "total": 189860,
-    "drinks": "ソーダ×2(¥4,000)、カレラ(赤)×1(¥80,000)"
+    "drinks": "ソーダ×2、カレラ(赤)×1",
+    "month": 2
   },
   {
     "date": "2026/2/10",
-    "month": 2,
     "time": "21:55〜23:10",
     "customerName": "石橋崇様",
     "partySize": 3,
     "subtotal": 68000,
     "total": 175950,
-    "drinks": "ゲーヴ・イエロー×1(¥35,000)"
+    "drinks": "ゲーヴ・イエロー×1",
+    "month": 2
   },
   {
     "date": "2026/2/17",
-    "month": 2,
     "time": "20:20〜22:45",
     "customerName": "中井様",
     "partySize": 1,
     "subtotal": 27000,
     "total": 78210,
-    "drinks": "ソーダ×7(¥14,000)"
+    "drinks": "ソーダ×7",
+    "month": 2
   },
   {
     "date": "2026/2/17",
-    "month": 2,
     "time": "20:25〜21:55",
     "customerName": "今野様",
     "partySize": 1,
     "subtotal": 13000,
     "total": 43120,
-    "drinks": ""
+    "drinks": "—",
+    "month": 2
   },
   {
     "date": "2026/2/17",
-    "month": 2,
     "time": "20:30〜21:40",
     "customerName": "力也様",
     "partySize": 1,
     "subtotal": 19000,
     "total": 62690,
-    "drinks": "ソーダ×3(¥6,000)"
+    "drinks": "ソーダ×3",
+    "month": 2
   },
   {
     "date": "2026/2/18",
-    "month": 2,
     "time": "20:30〜00:05",
     "customerName": "中井様",
     "partySize": 2,
     "subtotal": 86000,
     "total": 232880,
-    "drinks": "ソーダ×11(¥22,000)、知多×1(¥40,000)"
+    "drinks": "ソーダ×11、知多×1",
+    "month": 2
   },
   {
     "date": "2026/2/19",
-    "month": 2,
     "time": "20:30〜00:15",
     "customerName": "今野様",
     "partySize": 1,
     "subtotal": 123000,
     "total": 250470,
-    "drinks": "ソーダ×5(¥10,000)、エグリ・ウーリエ×1(¥100,000)"
+    "drinks": "ソーダ×5、エグリ・ウーリエ×1",
+    "month": 2
   },
   {
     "date": "2026/2/24",
-    "month": 2,
     "time": "20:30〜23:10",
     "customerName": "まき様",
     "partySize": 1,
     "subtotal": 7500,
     "total": 33000,
-    "drinks": "ジャンソン・シャルドネ×1(¥7,500)"
+    "drinks": "ジャンソン・シャルドネ×1",
+    "month": 2
   },
   {
     "date": "2026/2/24",
-    "month": 2,
     "time": "21:30〜00:05",
     "customerName": "岡田・加藤雅人様",
     "partySize": 2,
     "subtotal": 95500,
     "total": 342530,
-    "drinks": "ソフトドリンク×1(¥1,500)、グラスシャンパン×6(¥18,000)、グラス白ワイン×2(¥6,000)、知多×1(¥40,000)"
+    "drinks": "ソフトドリンク×1、グラスシャンパン×6、グラス白ワイン×2、知多×1",
+    "month": 2
   },
   {
     "date": "2026/2/25",
-    "month": 2,
     "time": "20:30〜23:45",
     "customerName": "中井様",
     "partySize": 1,
     "subtotal": 55000,
     "total": 135640,
-    "drinks": "ソーダ×6(¥12,000)、佐藤・麦×1(¥30,000)"
+    "drinks": "ソーダ×6、佐藤・麦×1",
+    "month": 2
   },
   {
     "date": "2026/3/4",
-    "month": 3,
     "time": "20:10〜23:20",
     "customerName": "力也・新倉様",
     "partySize": 2,
     "subtotal": 181000,
     "total": 394450,
-    "drinks": "ソーダ×6(¥12,000)、グラスシャンパン×1(¥3,000)、グラス赤ワイン×4(¥12,000)、山崎NV×1(¥50,000)、シャブリ特級ブーグロWF×1(¥80,000)"
+    "drinks": "ソーダ×6、グラスシャンパン×1、グラス赤ワイン×4、山崎NV×1、シャブリ特級ブーグロWF×1",
+    "month": 2
   },
   {
     "date": "2026/3/4",
-    "month": 3,
     "time": "20:30〜23:50",
     "customerName": "中井様",
     "partySize": 1,
     "subtotal": 80000,
     "total": 175450,
-    "drinks": "ソーダ×8(¥16,000)、グラス白ワイン×7(¥21,000)、佐藤・麦×1(¥30,000)"
+    "drinks": "ソーダ×8、グラス白ワイン×7、佐藤・麦×1",
+    "month": 2
   },
   {
     "date": "2026/3/4",
-    "month": 3,
     "time": "21:40〜23:10",
     "customerName": "力也様",
     "partySize": 1,
     "subtotal": 177000,
     "total": 314700,
-    "drinks": "ソーダ×2(¥4,000)、シャブリ特級ブーグロWF×2(¥160,000)"
+    "drinks": "ソーダ×2、シャブリ特級ブーグロWF×2",
+    "month": 2
   },
   {
     "date": "2026/3/4",
-    "month": 3,
     "time": "23:10〜01:05",
     "customerName": "津田 信次様",
     "partySize": 1,
     "subtotal": 156000,
     "total": 277530,
-    "drinks": "ルイサール・ブランドブラン×1(¥60,000)、あさつゆ×1(¥80,000)"
+    "drinks": "ルイサール・ブランドブラン×1、あさつゆ×1",
+    "month": 2
   },
   {
     "date": "2026/3/4",
-    "month": 3,
     "time": "23:55〜01:05",
     "customerName": "中井様",
     "partySize": 1,
     "subtotal": 15000,
     "total": 46310,
-    "drinks": "ソーダ×1(¥2,000)"
+    "drinks": "ソーダ×1",
+    "month": 2
   },
   {
     "date": "2026/3/5",
-    "month": 3,
     "time": "20:40〜22:50",
     "customerName": "井坂久素・中井太郎様",
     "partySize": 2,
     "subtotal": 386000,
     "total": 925100,
-    "drinks": "ソーダ×6、山崎12年、シャンパン等"
+    "drinks": "ソーダ×6、山崎12年、シャンパン等",
+    "month": 3
   },
   {
     "date": "2026/3/6",
-    "month": 3,
     "time": "20:00〜21:30",
     "customerName": "安江恭一様",
     "partySize": 1,
     "subtotal": 101000,
     "total": 183480,
-    "drinks": "ソーダ×4、シャンパン等"
+    "drinks": "ソーダ×4、シャンパン等",
+    "month": 3
   },
   {
     "date": "2026/3/6",
-    "month": 3,
     "time": "20:45〜22:10",
     "customerName": "力也・新倉様",
     "partySize": 3,
     "subtotal": 167000,
     "total": 343410,
-    "drinks": "ソーダ×2、山崎NV等"
+    "drinks": "ソーダ×2、山崎NV等",
+    "month": 3
   },
   {
     "date": "2026/3/10",
-    "month": 3,
     "time": "19:55〜23:20",
     "customerName": "中井様",
     "partySize": 1,
     "subtotal": 96000,
     "total": 216160,
-    "drinks": "ソーダ×9、シャンパン等"
+    "drinks": "ソーダ×9、シャンパン等",
+    "month": 3
   },
   {
     "date": "2026/3/10",
-    "month": 3,
     "time": "21:05〜01:15",
     "customerName": "力也・新倉様",
     "partySize": 3,
     "subtotal": 328500,
     "total": 651080,
-    "drinks": "ソーダ×5、クリスタル等"
+    "drinks": "ソーダ×5、クリスタル等",
+    "month": 3
+  },
+  {
+    "date": "2026/3/11",
+    "time": "",
+    "customerName": "横山様",
+    "partySize": 1,
+    "subtotal": 19000,
+    "total": 56100,
+    "drinks": "ソーダ×2",
+    "month": 3
+  },
+  {
+    "date": "2026/3/11",
+    "time": "",
+    "customerName": "上松様",
+    "partySize": 2,
+    "subtotal": 355000,
+    "total": 668250,
+    "drinks": "ソーダ×7、シューズクリーニング、響ブレンダーズチョイス、エグリ・ウーリエ ブランドノワール",
+    "month": 3
+  },
+  {
+    "date": "2026/3/16",
+    "time": "",
+    "customerName": "岸野逸人・そがべ様",
+    "partySize": 2,
+    "subtotal": 34000,
+    "total": 102080,
+    "drinks": "ソーダ×4",
+    "month": 3
   },
   {
     "date": "2026/3/18",
-    "month": 3,
     "time": "20:15〜21:45",
     "customerName": "丸山様",
     "partySize": 1,
     "subtotal": 50000,
     "total": 103730,
-    "drinks": "グレンモーレンジ等"
+    "drinks": "グレンモーレンジ等",
+    "month": 3
   },
   {
     "date": "2026/3/19",
-    "month": 3,
     "time": "21:15〜00:10",
     "customerName": "菊池様",
     "partySize": 1,
     "subtotal": 62000,
     "total": 146740,
-    "drinks": "ソーダ×2、グラスシャンパン、I.W.ハーパー等"
+    "drinks": "ソーダ×2、グラスシャンパン、I.W.ハーパー等",
+    "month": 3
   },
   {
     "date": "2026/3/24",
-    "month": 3,
     "time": "21:45〜23:35",
     "customerName": "力也様",
     "partySize": 1,
     "subtotal": 149000,
     "total": 271580,
-    "drinks": "ソーダ×2、山崎NV、シャブリ特級レクロ等"
+    "drinks": "ソーダ×2、山崎NV、シャブリ特級レクロ等",
+    "month": 3
   },
   {
     "date": "2026/3/25",
-    "month": 3,
     "time": "22:40〜00:15",
     "customerName": "石橋崇様",
     "partySize": 2,
     "subtotal": 121000,
     "total": 241400,
-    "drinks": "吉四六、ヴーヴイエロー×2"
+    "drinks": "吉四六、ヴーヴイエロー×2",
+    "month": 3
   },
   {
     "date": "2026/3/26",
-    "month": 3,
     "time": "21:05〜21:40",
     "customerName": "清沢様",
     "partySize": 1,
     "subtotal": 21000,
     "total": 57420,
-    "drinks": "ソーダ×3"
+    "drinks": "ソーダ×3",
+    "month": 3
+  },
+  {
+    "date": "2026/4/1",
+    "time": "",
+    "customerName": "加藤雅人様",
+    "partySize": 1,
+    "subtotal": 111000,
+    "total": 111000,
+    "drinks": "—",
+    "month": 3,
+    "note": "4/1伝票・3月分計上"
   }
 ]
