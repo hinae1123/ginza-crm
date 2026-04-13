@@ -9,7 +9,7 @@ import promptData from '../data/prompt.json';
 // When data is updated, increment this version string.
 // If the stored version doesn't match, localStorage is auto-reset.
 // ============================================================
-const DATA_VERSION = '2026-04-13-v3';
+const DATA_VERSION = '2026-04-13-v4';
 const VERSION_KEY = 'ginza_data_version';
 
 export interface Customer {

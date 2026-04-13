@@ -439,5 +439,45 @@
     "drinks": "—",
     "month": 3,
     "note": "4/1伝票・3月分計上"
+  },
+  {
+    "date": "2026/4/6",
+    "time": "22:25〜23:00",
+    "customerName": "笛木諭・古川嘉洋様",
+    "partySize": 2,
+    "subtotal": 61000,
+    "total": 145200,
+    "drinks": "グレンフィディック12年×1",
+    "month": 4
+  },
+  {
+    "date": "2026/4/7",
+    "time": "20:30〜23:40",
+    "customerName": "安江恭一様",
+    "partySize": 2,
+    "subtotal": 190000,
+    "total": 414700,
+    "drinks": "ソーダ×14、佐藤・麦×1、知多×1、トスカーナ×1",
+    "month": 4
+  },
+  {
+    "date": "2026/4/8",
+    "time": "20:15〜21:55",
+    "customerName": "力也様",
+    "partySize": 3,
+    "subtotal": 137000,
+    "total": 300290,
+    "drinks": "ソーダ×4、生ビール×6、シャブリ特級レ・クロWF×1",
+    "month": 4
+  },
+  {
+    "date": "2026/4/8",
+    "time": "20:30〜22:55",
+    "customerName": "中井太郎様",
+    "partySize": 1,
+    "subtotal": 131000,
+    "total": 248820,
+    "drinks": "ソーダ×8、PJベルエポック×1",
+    "month": 4
   }
 ]
